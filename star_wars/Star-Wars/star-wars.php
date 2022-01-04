@@ -6,7 +6,7 @@
 if (!defined('ABSPATH')) {
     exit;
 }
-function register_star_wars()
+function register_starwars()
 {
     register_widget('Star_Wars_Widget');
 }
@@ -82,4 +82,4 @@ function delete_database_on_deactivation()
 }
 register_activation_hook(__FILE__, 'database_table');
 register_deactivation_hook(__FILE__, 'delete_database_on_deactivation');
-add_action('widgets_init', 'register_star_wars');
+add_action('widgets_init', 'register_starwars');

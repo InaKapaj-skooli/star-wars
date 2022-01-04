@@ -1,6 +1,7 @@
 <?php
 require_once(plugin_dir_path(__FILE__) . '/../star-wars.php');
 
+
 class Star_Wars_Widget extends WP_Widget
 {
     function __construct()
@@ -24,16 +25,16 @@ class Star_Wars_Widget extends WP_Widget
         $table_name = $wpdb->prefix . 'starwars';
         $db_results = $wpdb->get_results(" SELECT * FROM $table_name ");
         if (isset($_POST['nr_of_ships'])) {
-            $test = $_POST['nr_of_ships'];
-            $idtest = $_POST['id'];
+            $nr_of_ships = $_POST['nr_of_ships'];
+            $id = $_POST['id'];
             foreach ($db_results as $r) {
                 $wpdb->update(
                     $table_name,
                     array(
-                        'nr_of_ships' => $test,
+                        'nr_of_ships' => $nr_of_ships,
                     ),
                     array(
-                        'id' => $idtest,
+                        'id' => $id,
                     )
                 );
             }
@@ -53,14 +54,7 @@ class Star_Wars_Widget extends WP_Widget
         global $wpdb;
         $table_name = $wpdb->prefix . 'starwars';
         $db_results = $wpdb->get_results(" SELECT * FROM $table_name ");
-        echo '<div>';
-        echo '<select>';
-        echo '<option>Choose Ship</option>';
-        foreach ($db_results as $r) {
-            echo  "<option value='ship-{$r->id}' >$r->name</option>";
-        }
-        echo '</select>';
-        echo '</div>';
+        include('ship-selector-partial.php');
     }
 
     function render_ship_information()
@@ -69,7 +63,7 @@ class Star_Wars_Widget extends WP_Widget
         $table_name = $wpdb->prefix . 'starwars';
         $db_results = $wpdb->get_results(" SELECT * FROM $table_name ");
         foreach ($db_results as $r) {
-            get_template_part('content');
+            include('ship-info-partial.php');
         }
     }
 }
